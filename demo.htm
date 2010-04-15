@@ -58,14 +58,15 @@ var map;
 function initialize() {
 	// setup SoMa map
 	var myOptions = {
-		zoom: 12,
+		zoom: 11,
 		center: new google.maps.LatLng(37.760668, -122.438008),
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
+	// start with some @raffi because he's does the geo thing
 	google.maps.event.addListenerOnce(map, "bounds_changed", function() {
-		getFeed('http://api.twitter.com/1/twitterapi/lists/team/statuses.json');
+		getFeed('http://api.twitter.com/1/statuses/user_timeline/raffi.json');
 	});
 
 	// this adds a hovercard to the @hitching title
@@ -114,7 +115,7 @@ function addPolyTweets(data) {
 <br clear="left"/>
 <h2>Q: How can we show some approximately-located Tweets on a map?</h2>
 <select id="feed" style="width:370px;">
-<option value="http://api.twitter.com/1/statuses/user_timeline/raffi.json">http://api.twitter.com/1/statuses/user_timeline/raffi.json</option>
+<option value="http://api.twitter.com/1/twitterapi/lists/team/statuses.json">http://api.twitter.com/1/twitterapi/lists/team/statuses.json</option>
 <option value="http://api.twitter.com/1/twitter/lists/team/statuses.json">http://api.twitter.com/1/twitter/lists/team/statuses.json</option>
 </select>
 <input type="button" value="Add &raquo;" onClick="getFeed(document.getElementById('feed').options[document.getElementById('feed').selectedIndex].value)" />
