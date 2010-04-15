@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>polytweet Demo</title>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://platform.twitter.com/anywhere.js?id=HHGqiCyavlUCYPKpfukg&v=1"></script>
+<script type="text/javascript" src="polytweet.js"></script>
+<style>
+div.polytweet_exact {
+	width: 25px;
+	height: 32px;
+	background-image: url(http://twitter.com/images/pin.png);
+}
+
+img.polytweet_approx {
+	/* IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+	/* IE 5-7 */
+	filter: alpha(opacity=50);
+
+	/* Netscape */
+	-moz-opacity: 0.5;
+
+	/* Safari 1.x */
+	-khtml-opacity: 0.5;
+
+	/* Good browsers */
+	opacity: 0.5;
+}
+
+img.polytweet_over {
+}
+</style>
+<script type="text/javascript">
+
+// polygon options for mouseover event
+// see http://code.google.com/apis/maps/documentation/v3/reference.html#PolygonOptions
+var pt_over = {
+	strokeColor: "#FF0000",
+	strokeOpacity: 0,
+	strokeWeight: 0,
+	fillColor: "#FF0000",
+	fillOpacity: 0.2
+};
+
+// polygon options for mouseout event
+// see http://code.google.com/apis/maps/documentation/v3/reference.html#PolygonOptions
+var pt_out = {
+	strokeColor: "#FF0000",
+	strokeOpacity: 0,
+	strokeWeight: 0,
+	fillColor: "#FF0000",
+	fillOpacity: 0
+};
+
+var map;
+
+function initialize() {
+	// setup SoMa map
+	var myOptions = {
+		zoom: 12,
+		center: new google.maps.LatLng(37.760668, -122.438008),
+		mapTypeId: google.maps.MapTypeId.TERRAIN
+	};
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+	google.maps.event.addListenerOnce(map, "bounds_changed", function() {
+		getFeed('http://api.twitter.com/1/twitterapi/lists/team/statuses.json');
+	});
+
+	// this adds a hovercard to the @hitching title
+	twttr.anywhere(function(twitter) {
+		twitter('#hovercard_me').hovercards();
+	})
+}
+
+// get some Twitter API data
+function getFeed(url) {
+	url += '?callback=addPolyTweets';
+
+	var script = document.createElement("script");
+	script.setAttribute("src", url);
+	script.setAttribute("type", "text/javascript");                
+	document.body.appendChild(script);
+}
+
+// add polytweets to the map
+function addPolyTweets(data) {
+	if (data && data.length) {
+		for (var i = 0; i < data.length; i++) {
+			var tweet = data[i];
+						
+			// add a polytweet to the map
+			var polytweet = new google.maps.Polytweet(tweet, map, pt_over, pt_out);
+			
+			// that's it!			
+		}
+	}
+
+	// add some @anywhere hovercards
+	twttr.anywhere(function(twitter) {
+		twitter(".hovercardable").hovercards({
+			username: function(node) {
+				return node.screen_name;	
+			}
+		});
+	})
+}
+</script>
+</head>
+<body onload="initialize()">
+<a href="http://www.geome.me/1VYM0" target="_blank"><img src="http://www.geome.me/i/geomeme_logo.png" border="0" align="left"></a>
+<h1>polytweet demo by <span id="hovercard_me">@hitching</span></h1>
+<br clear="left"/>
+<h2>Q: How can we show some approximately-located Tweets on a map?</h2>
+<select id="feed" style="width:370px;">
+<option value="http://api.twitter.com/1/statuses/user_timeline/raffi.json">http://api.twitter.com/1/statuses/user_timeline/raffi.json</option>
+<option value="http://api.twitter.com/1/twitter/lists/team/statuses.json">http://api.twitter.com/1/twitterapi/lists/team/statuses.json</option>
+</select>
+<input type="button" value="Add &raquo;" onClick="getFeed(document.getElementById('feed').options[document.getElementById('feed').selectedIndex].value)" />
+<br/><input id="feed_other" type="text" value="http://api.twitter.com/1/{user}/lists/{list}/statuses.json" size="60" style="width:370px;" /> 
+<input type="button" value="Add &raquo;" onClick="getFeed(document.getElementById('feed_other').value)" />
+<br/><br/><div id="map_canvas" style="width: 600px; height: 380px;"></div>
+<h2>Download/discuss at <a href="http://code.google.com/p/polytweet">http://code.google.com/p/polytweet</a></h2>
+</body>
+</html>
