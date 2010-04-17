@@ -67,11 +67,16 @@ Polytweet.prototype.onAdd = function() {
 	_div.appendChild(_img);
 	
 	// for use in hovercards
-	_div.screen_name = this._tweet.user.screen_name;
+	// @anywhere sometimes passes the div, sometimes the img to the username function 
+	_div.title = this._tweet.user.screen_name;
+	_img.title = this._tweet.user.screen_name;
 	
 	if (this._tweet.place) {
 		// decorate rollover with place name
-		if (this._tweet.place.name) _div.title = this._tweet.place.name;
+		if (this._tweet.place.name) {
+			_div.title += ' in ' + this._tweet.place.name;
+			_img.title += ' in ' + this._tweet.place.name;	
+		}
 
 		// setup event listeners to highlight the place
 		if (this._tweet.place.id)  {
