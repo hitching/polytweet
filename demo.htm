@@ -94,7 +94,14 @@ function addPolyTweets(data) {
 			// add a polytweet to the map
 			var polytweet = new google.maps.Polytweet(tweet, map, pt_over, pt_out);
 			
-			// that's it!			
+			// that's it!
+
+			// for this demo, extend map bounds to include polytweet
+			if (polytweet.getPosition()) {
+				if (!map.getBounds().contains(polytweet.getPosition())) {
+					map.fitBounds(map.getBounds().extend(polytweet.getPosition()));
+				}
+			}		
 		}
 	}
 
