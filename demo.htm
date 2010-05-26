@@ -119,9 +119,9 @@ function addPolyTweets(data) {
 </head>
 <body onload="initialize()">
 <a href="http://www.geome.me/1VYM0" target="_blank"><img src="http://www.geome.me/i/geomeme_logo.png" border="0" align="left"></a>
-<h1>http://bit.ly/polytweetdemo by <span id="hovercard_me">@hitching</span></h1>
+<h1>polytweet by <span id="hovercard_me">@hitching</span></h1>
 <br clear="left"/>
-<h2>Q: How can we show some approximately-located Tweets on a map?</h2>
+<h2>How to display some approximately-located Tweets on a map</h2>
 <select id="feed" style="width:370px;">
 <option value="http://api.twitter.com/1/twitterapi/lists/team/statuses.json">http://api.twitter.com/1/twitterapi/lists/team/statuses.json</option>
 <option value="http://api.twitter.com/1/twitter/lists/team/statuses.json">http://api.twitter.com/1/twitter/lists/team/statuses.json</option>
@@ -130,6 +130,5 @@ function addPolyTweets(data) {
 <br/><input id="feed_other" type="text" value="http://api.twitter.com/1/{user}/lists/{list}/statuses.json" size="60" style="width:370px;" /> 
 <input type="button" value="Add &raquo;" onClick="getFeed(document.getElementById('feed_other').value)" />
 <br/><br/><div id="map_canvas" style="width: 600px; height: 380px;"></div>
-<h2>Download/discuss at <a href="http://code.google.com/p/polytweet">http://code.google.com/p/polytweet</a></h2>
 </body>
 </html>
