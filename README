@@ -1,0 +1,11 @@
+Most geo mashups such as GeoMeme http://www.geome.me display Tweets and other geo-located content as points on a map, based on exact latitude/longitude coordinates.
+
+Twitter released its Places feature at Chirp on 14 April 2010, which instead allows Tweets to be approximately geo-located, within a 'Place' of chosen granularity; a city, or a neighborhood, perhaps a restaurant or a park. 
+
+This is a great option for users who have geo privacy concerns about revealing an exact latitude/longitude.
+
+However, this approach presents a challenge to developers on the Twitter platform: how can approximately-located Tweets be displayed on a map?
+
+Moreover, users need app developers to adopt a standard way of showing these approximately-located Tweets on a map. A consistent approach by developers will help users form a consistent understanding of this Twitter feature, in a similar way that @anywhere Hovercards provide a consistent approach to showing data about a particular Twitter user.
+
+polytweet is a javascript library which displays approximately-located Tweets on a Google Map. It was conceived at Chirp, as a way to start the conversation of how we can best do this.
